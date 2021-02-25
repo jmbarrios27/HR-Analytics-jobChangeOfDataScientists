@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 import warnings
 import joblib
 from imblearn.over_sampling import SMOTE
+from sklearn.ensemble import ExtraTreesClassifier
 warnings.filterwarnings('ignore')
 plt.style.use('ggplot')
 
@@ -491,6 +492,13 @@ def hrAnalytics_lr():
 
 hrAnalytics_lr()
 
+#Feature Importance
+model = ExtraTreesClassifier()
+model.fit(X_smote,y_smote)
+feat_importances = pd.Series(model.feature_importances_, index=X_smote.columns)
+feat_importances.nlargest(10).plot(kind='barh',color='blue')
+plt.title('¿Why Employees Leave?')
+plt.show()
 
 #Inspecting Test Dataset, with no target variable
 test.head()
